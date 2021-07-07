@@ -10,6 +10,8 @@ open class RendererRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
     private val viewRenderers: SparseArray<ViewRenderer<ItemModel, RecyclerView.ViewHolder>> = SparseArray()
     private val items: MutableList<ItemModel> = mutableListOf()
 
+    private val universalDiffCallback = DiffCallback()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val viewRenderer = viewRenderers.get(viewType)
         if (viewRenderer != null) {
@@ -58,6 +60,10 @@ open class RendererRecyclerViewAdapter : RecyclerView.Adapter<RecyclerView.ViewH
 
     fun addItems(items: List<ItemModel>) {
         this.items.addAll(items)
+    }
+
+    fun setItems(newList: List<ItemModel>) {
+        this.setItems(newList, universalDiffCallback)
     }
 
     fun setItems(newList: List<ItemModel>, diffCallback: DiffCallback) {
